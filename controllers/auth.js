@@ -22,7 +22,8 @@ const User = require('../models/User')
     }
     req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false })
   
-    passport.authenticate('local', (err, user, info) => {
+    //set req.user to authenticated user if successful
+    passport.authenticate('local', (err, user, info) => {   // local strategy
       if (err) { return next(err) }
       if (!user) {
         req.flash('errors', info)
@@ -71,7 +72,8 @@ const User = require('../models/User')
     const user = new User({
       userName: req.body.userName,
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      profileColor: req.body.color, 
     })
   
     User.findOne({$or: [
